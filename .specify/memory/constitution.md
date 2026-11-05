@@ -1,50 +1,61 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# kikumimi Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. 利用者への安全で優しい応答
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+- AIは常に穏やかかつ肯定的に応答し、利用者を否定・説教してはならない(MUST)。対立を生む話題は優しく受け流す(MUST)。
+- AIは医療診断・服薬指示・法律判断を行ってはならない(MUST)。
+- 体調不良や緊急性のある発言には「職員さんに伝えましょう」と促し、管理者へアラートを出す(MUST)。このアラートは、会話終了後の異変検知を待たずに発報する(MUST)。
+- 回答は短く、高齢者が聞き取りやすい平易な日本語にする(MUST)。文の長さなどの具体的な基準は各specで定める。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**理由**: 利用者は高齢者であり、AIの一言が不安や誤った判断につながりうる。判断が必要な場面は人である職員へ確実につなぐ。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. プライバシーとローカル処理
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+- 音声を含む会話データは、利用者の端末と kikumimi 以外に送信してはならない(MUST)。
+- LLMは Ollama 上のローカルSLMを既定とする(MUST)。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+**理由**: 会話には健康状態や家族のことなど機微な情報が含まれるため、施設の管理下から出さない。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### III. AIの役割の限定
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- AIが担うのは「話し相手」と「会話からの異変検知(いつもと違う様子)」のみとする(MUST)。
+- 体調記録と要望は専用フォームで受け付け、AIを通してはならない(MUST)。
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**理由**: 記録や要望の正確さをAIの解釈に依存させず、AIの誤りが影響する範囲を限定する。
+
+### IV. 高齢者向けアクセシビリティ
+
+- 音声入出力を主、テキストを従とする(MUST)。
+- 文字とボタンは大きくし、1画面の操作は最小限にする(MUST)。サイズや操作数などの具体的な基準は各specで定める。
+
+**理由**: 文字入力や細かい画面操作に不慣れな高齢者でも、話しかけるだけで使えるようにする。
+
+## 技術スタック
+
+- モノレポ構成とし、`frontend/`(Next.js App Router・SSR・TypeScript)と `backend/`(FastAPI・Python)を置く(MUST)。
+- DB は MySQL、LLM は Ollama、TTS は VOICEVOX を用いる(MUST)。
+- STT はローカルで処理する(MUST)。具体的なエンジンは、想定GPUの制約を踏まえて plan で決定する。
+- docker compose で全サービスを起動できること(MUST)。
+- 想定GPUは VRAM 4GB とする。LLMの同時推論は1本とし(MUST)、異変検知は会話終了後に非同期で実行する(MUST)。
+
+## 開発プロセス
+
+- 1機能 = 1spec = 1ブランチ = 1 git worktree とする(MUST)。
+- コミットは Conventional Commits に従う(MUST)。
+- 展示会デモで動くことを最優先し、範囲外の作り込みはしない(MUST)。
+- 認証は管理者のみ(管理グループと所属スタッフ)を対象とする(MUST)。利用者はユーザー名と所属グループの入力のみとし、認証を課さない(MUST)。
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- 本憲法は、他の開発慣行や個別のspecより優先する。
+- 本プロジェクトは個人開発であり、改定の承認者は開発者本人のみとする。
+- 改定は本ファイルの変更として行い、変更内容と理由をコミットに残す(MUST)。
+- バージョンはセマンティックバージョニングに従う(MUST)。
+  - MAJOR: 原則の削除、または互換性のない再定義
+  - MINOR: 原則・セクションの追加、または指針の大幅な拡張
+  - PATCH: 意味を変えない文言修正や明確化
+- 各機能の plan 作成時に本憲法への適合を確認し、逸脱する場合は理由を plan に記録する(MUST)。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-05 | **Last Amended**: 2026-11-05
