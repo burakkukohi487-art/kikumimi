@@ -1,5 +1,5 @@
 ## ブランチ運用
-- main は常に動く状態。main への直接コミットは `docs/`、`README.md`、`CLAUDE.md`、`.specify/memory/constitution.md` のみ許可
+- main は常に動く状態。main への直接コミットは `docs/`、`README.md`、`CLAUDE.md`、`.specify/memory/constitution.md`、`.claude/settings.json` のみ許可
 - それ以外（コード・`specs/`）は必ず機能ブランチ → PR でマージ
 - 機能ブランチは Spec Kit の命名に従う：`001-admin-auth` のように `番号-機能名`
 - 修正は `fix/内容`、雑務は `chore/内容`
