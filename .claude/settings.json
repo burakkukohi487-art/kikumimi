@@ -60,7 +60,8 @@
       "Edit(frontend/**)",
       "Edit(backend/**)",
       "Edit(specs/**)",
-      "Edit(docs/**)"
+      "Edit(docs/**)",
+      "Edit(~/.claude/projects/c--HAL-third-year-HEW-kikumimi/memory/**)"
     ],
     "ask": [
       "Bash(git reset --hard *)",
