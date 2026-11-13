@@ -103,7 +103,7 @@
       "PowerShell(Invoke-WebRequest *)",
       "PowerShell(Invoke-RestMethod *)",
       "Edit(CLAUDE.md)",
-      "Edit(/*)",
+      "Edit(README.md)",
       "Edit(.specify/memory/constitution.md)"
     ],
     "deny": [
