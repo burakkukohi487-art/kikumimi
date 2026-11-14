@@ -57,11 +57,11 @@
       "PowerShell(gh issue view *)",
       "PowerShell(gh issue list *)",
       "PowerShell(gh issue status *)",
-      "Edit(frontend/**)",
-      "Edit(backend/**)",
-      "Edit(specs/**)",
-      "Edit(docs/**)",
-      "Edit(~/.claude/projects/c--HAL-third-year-HEW-kikumimi/memory/**)"
+      "Edit(/frontend/**)",
+      "Edit(/backend/**)",
+      "Edit(/specs/**)",
+      "Edit(/docs/**)",
+      "Edit(~/.claude/projects/c--HAL-third-year-HEW-kikumimi/*/memory/**)"
     ],
     "ask": [
       "Bash(git reset --hard *)",
@@ -102,9 +102,9 @@
       "PowerShell(wget *)",
       "PowerShell(Invoke-WebRequest *)",
       "PowerShell(Invoke-RestMethod *)",
-      "Edit(CLAUDE.md)",
-      "Edit(README.md)",
-      "Edit(.specify/memory/constitution.md)"
+      "Edit(/CLAUDE.md)",
+      "Edit(/README.md)",
+      "Edit(/.specify/memory/constitution.md)"
     ],
     "deny": [
       "Bash(rm -rf *)",
